@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net10.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UseWPF>true</UseWPF>
+        <UseWindowsForms>true</UseWindowsForms>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Remove="Fonts\Terminus.ttf" />
+      <Resource Include="Fonts\Terminus.ttf" />
+      <None Remove="Fonts\Terminus (TTF) Bold Italic 700.ttf" />
+      <Resource Include="Fonts\Terminus (TTF) Bold Italic 700.ttf" />
+      <None Remove="Fonts\Terminus (TTF) Bold 700.ttf" />
+      <Resource Include="Fonts\Terminus (TTF) Bold 700.ttf" />
+      <None Remove="Fonts\Terminus (TTF) Italic 500.ttf" />
+      <Resource Include="Fonts\Terminus (TTF) Italic 500.ttf" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+      <PackageReference Include="FreeSpire.Doc" Version="14.4.0" />
+      <PackageReference Include="MahApps.Metro.IconPacks.PixelartIcons" Version="6.2.1" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.8">
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.8" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.8">
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        <PrivateAssets>all</PrivateAssets>
+      </PackageReference>
+      <PackageReference Include="PdfiumViewer" Version="2.13.0" />
+      <PackageReference Include="PdfiumViewer.Native.x86_64.v8-xfa" Version="2018.4.8.256" />
+      <PackageReference Include="PdfiumViewer.WPF" Version="1.0.6" />
+      <PackageReference Include="System.Runtime.Serialization.Formatters" Version="10.0.8" />
+    </ItemGroup>
+
+</Project>

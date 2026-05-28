@@ -1,0 +1,63 @@
+﻿<UserControl x:Class="Paperhome.Views.InspectorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="400">
+    <Grid Margin="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="28"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="0" Background="#1F1F1F" BorderBrush="#111" BorderThickness="2,2,2,0" HorizontalAlignment="Left" RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True" UseLayoutRounding="True">
+            <TextBlock Text="ИНСПЕКТОР" Foreground="#888" FontWeight="Bold" Padding="15,4" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Border>
+        <!-- Кнопка 'открыть в нативной программе' -->
+        <Button x:Name="BtnOpenNative" Grid.Row="0" Background="#1F1F1F" BorderBrush="#111" BorderThickness="2,2,2,0" Margin="0,0,15,0" HorizontalAlignment="Right" VerticalAlignment="Bottom" RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True" UseLayoutRounding="True" Click="BtnOpenNative_Click" Style="{StaticResource MechanicalButton}" Padding="4">
+            <iconPacks:PackIconPixelartIcons Kind="Link" Width="14" Height="14" Foreground="#888" />
+        </Button>
+        <Border Grid.Row="1" Background="#1F1F1F" BorderBrush="#111" BorderThickness="2" RenderOptions.EdgeMode="Aliased" SnapsToDevicePixels="True" UseLayoutRounding="True">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="0" ShadowDepth="2" Direction="315" Opacity="0.3" Color="Black"/>
+            </Border.Effect>
+        </Border>
+        <Grid Grid.Row="1" Margin="2" UseLayoutRounding="True" SnapsToDevicePixels="True">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="35"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <!-- Панель инструментов (только для PDF) -->
+            <Border x:Name="PdfToolbar" Grid.Row="0" Background="#2A2A2A" BorderBrush="#111" BorderThickness="0,0,0,2" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                    <Button Style="{StaticResource MechanicalButton}" Margin="5,0" Padding="4" Click="BtnPrevPage_Click">
+                        <iconPacks:PackIconPixelartIcons Kind="ChevronLeft" Width="20" Height="20" />
+                    </Button>
+                    <Border Background="#111" BorderBrush="#333" BorderThickness="2" Padding="10,2" Margin="5,0" Height="25">
+                        <TextBlock x:Name="TxtPageCounter" Text="СТРАНИЦА: 01 / 12" Foreground="#DCA73F" VerticalAlignment="Center" />
+                    </Border>
+                    <Button Style="{StaticResource MechanicalButton}" Margin="5,0,15,0" Padding="4" Click="BtnNextPage_Click">
+                        <iconPacks:PackIconPixelartIcons Kind="ChevronRight" Width="20" Height="20" />
+                    </Button>
+                    <Button Style="{StaticResource MechanicalButton}" Margin="5,0" Padding="4" Click="BtnZoomOut_Click">
+                        <iconPacks:PackIconPixelartIcons Kind="ZoomOut" Width="20" Height="20" />
+                    </Button>
+                    <Button Style="{StaticResource MechanicalButton}" Margin="5,0,15,0" Padding="4" Click="BtnZoomIn_Click">
+                        <iconPacks:PackIconPixelartIcons Kind="ZoomIn" Width="20" Height="20" />
+                    </Button>
+                </StackPanel>
+            </Border>
+            <!-- Основная область вывода документа -->
+            <Grid Grid.Row="1" Background="#181818">
+                <TextBlock x:Name="TxtPlaceholder" Text="[ВЫВОД ДОКУМЕНТА]" Foreground="#555" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <!-- Просмотр картинок -->
+                <ScrollViewer x:Name="ImgScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Visibility="Collapsed">
+                    <Image x:Name="ImgViewer" Stretch="None" RenderOptions.BitmapScalingMode="HighQuality" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </ScrollViewer>
+                <!-- Просмотр текста -->
+                <TextBox x:Name="TxtViewer" Visibility="Collapsed" IsReadOnly="True" Background="Transparent" Foreground="#DCA73F" FontFamily="pack://application:,,,/Fonts/#Terminus (TTF)" BorderThickness="0" TextWrapping="Wrap" ScrollViewer.VerticalScrollBarVisibility="Auto" Margin="10"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</UserControl>
