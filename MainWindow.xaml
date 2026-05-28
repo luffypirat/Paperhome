@@ -2,14 +2,23 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:Paperhome.Views"
+        xmlns:paperhome="clr-namespace:Paperhome"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         Title="Paperwork" Height="700" Width="1150"
-        WindowStyle="None" ResizeMode="NoResize"
+        Icon="pack://application:,,,/Resources/logo.png"
+        WindowStyle="None" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         Background="#181818"
         TextElement.FontFamily="pack://application:,,,/Fonts/#Terminus (TTF)"
         TextOptions.TextFormattingMode="Display">
     
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="30"
+                      ResizeBorderThickness="0"
+                      GlassFrameThickness="0"
+                      UseAeroCaptionButtons="False"/>
+    </WindowChrome.WindowChrome>
+
     <Window.Resources>
         <DataTemplate x:Key="ArchiveViewTemplate">
             <!-- Included in standard XAML -->
@@ -29,10 +38,12 @@
                            FontWeight="Bold" />
                 
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                    <Button Width="40" Background="Transparent" BorderThickness="0" Foreground="#888888" Click="Minimize_Click">
+                    <Button Width="40" Background="Transparent" BorderThickness="0" Foreground="#888888" Click="Minimize_Click"
+                            WindowChrome.IsHitTestVisibleInChrome="True">
                         <iconPacks:PackIconPixelartIcons Kind="Minus" Width="12" Height="12"/>
                     </Button>
-                    <Button Width="40" Background="Transparent" BorderThickness="0" Foreground="#888888" Click="Close_Click">
+                    <Button Width="40" Background="Transparent" BorderThickness="0" Foreground="#888888" Click="Close_Click"
+                            WindowChrome.IsHitTestVisibleInChrome="True">
                         <iconPacks:PackIconPixelartIcons Kind="Close" Width="12" Height="12"/>
                     </Button>
                 </StackPanel>
@@ -63,6 +74,20 @@
                         <TextBlock Text="ПАРАМЕТРЫ" VerticalAlignment="Center"/>
                     </StackPanel>
                 </Button>
+
+                <Button Style="{StaticResource MechanicalButton}" Margin="5,6,5,6" Click="BtnAbout_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconPixelartIcons Kind="User" Width="14" Height="14" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="О ПРОГРАММЕ" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Style="{StaticResource MechanicalButton}" Margin="5,6,5,6" Click="BtnLock_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <iconPacks:PackIconPixelartIcons Kind="Lock" Width="14" Height="14" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                        <TextBlock Text="ЗАБЛОКИРОВАТЬ" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </Button>
             </StackPanel>
 
             <Grid Grid.Row="2" Background="{StaticResource SteppedDeskGradient}">
@@ -82,13 +107,15 @@
                     <views:InspectorView />
                 </Grid>
 
-                <ContentControl Grid.Column="4" Style="{StaticResource PixelBox}" Background="#222222" BorderBrush="#111" Margin="0,15,15,15">
-                    <ContentControl.Effect>
-                        <DropShadowEffect BlurRadius="0" ShadowDepth="6" Direction="315" Opacity="0.5" Color="Black"/>
-                    </ContentControl.Effect>
-                    <TextBlock Text="[ЗОНА МЕТАДАННЫХ И ИИ]" Foreground="#666"/>
-                </ContentControl>
+                <Grid Grid.Column="4" Margin="0,15,15,15">
+                    <views:MetadataView />
+                </Grid>
             </Grid>
+            <!-- Оверлей блокировки — перекрывает всё окно -->
+            <paperhome:LockScreen x:Name="LockOverlay"
+                                  Grid.Row="1" Grid.RowSpan="2"
+                                  Panel.ZIndex="999"
+                                  Unlocked="LockOverlay_Unlocked"/>
         </Grid>
     </Border>
 </Window>

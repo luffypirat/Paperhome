@@ -1,21 +1,21 @@
-﻿using System.Windows;
+﻿using System;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
-using Microsoft.Win32;
 using CommunityToolkit.Mvvm.Messaging;
 using Paperhome.Messages;
-using Paperhome.Services;
 
 namespace Paperhome.Views
 {
     public partial class MainWindow : Window
     {
-        private readonly ArchiveService _archiveService;
+        private readonly Paperhome.Services.ArchiveService _archiveService;
         private int? _selectedDocumentId = null;
 
         public MainWindow()
         {
             InitializeComponent();
-            _archiveService = new ArchiveService();
+            _archiveService = new Paperhome.Services.ArchiveService();
 
             // Подписываемся на выделение файла в дереве
             WeakReferenceMessenger.Default.Register<DocumentSelectedMessage>(this, (r, m) => 
@@ -27,6 +27,7 @@ namespace Paperhome.Views
         // Этот метод позволяет двигать окно за шапку (TitleBar)
         private void TitleBar_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (LockOverlay.Visibility == Visibility.Visible) return;
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         }
@@ -42,6 +43,22 @@ namespace Paperhome.Views
         {
             this.Close();
         }
+
+        // ── Разблокировка ────────────────────────────────────────────────────
+
+        private async void LockOverlay_Unlocked(object? sender, EventArgs e)
+        {
+            await Task.Run(() => App.SetupAfterUnlock());
+            WeakReferenceMessenger.Default.Send(new ArchiveUpdatedMessage());
+        }
+
+        private void BtnLock_Click(object sender, RoutedEventArgs e)
+        {
+            App.LockAndEncrypt();
+            LockOverlay.Lock();
+        }
+
+        // ── Кнопки тулбара ───────────────────────────────────────────────────
 
         private void BtnAdd_Click(object sender, RoutedEventArgs e)
         {
@@ -59,13 +76,19 @@ namespace Paperhome.Views
             }
         }
 
+        private void BtnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            var dlg = new AboutDialog() { Owner = this };
+            dlg.ShowDialog();
+        }
+
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (_selectedDocumentId.HasValue)
             {
                 _archiveService.DeleteFile(_selectedDocumentId.Value);
                 _selectedDocumentId = null;
-                // Оповещаем о необходимости перерисовки
+                WeakReferenceMessenger.Default.Send(new DocumentSelectedMessage(0)); // Очищаем инспектор
                 WeakReferenceMessenger.Default.Send(new ArchiveUpdatedMessage());
             }
             else

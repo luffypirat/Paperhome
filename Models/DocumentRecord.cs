@@ -16,9 +16,6 @@ namespace Paperhome.Models
         // Путь относительно корня локального хранилища
         public string RelativePath { get; set; } = string.Empty;
         
-        // Хэш для проверки целостности
-        public string Hash { get; set; } = string.Empty;
-        
         // Развернутая выжимка (summary) от ИИ
         public string Summary { get; set; } = string.Empty;
         

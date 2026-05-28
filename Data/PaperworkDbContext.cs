@@ -28,7 +28,11 @@ namespace Paperhome.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Настройка связей, если потребуется
+            modelBuilder.Entity<DocumentRecord>()
+                .HasMany(d => d.Tags)
+                .WithMany(t => t.Documents)
+                .UsingEntity(j => j.ToTable("DocumentTags"));
+
             base.OnModelCreating(modelBuilder);
         }
     }
