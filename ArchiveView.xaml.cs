@@ -40,7 +40,7 @@ namespace Paperhome.Views
             };
             var rootText = new TextBlock
             {
-                Text = "ЛОКАЛЬНАЯ БАЗА [OS_FS]",
+                Text = "КАТАЛОГ",
                 VerticalAlignment = VerticalAlignment.Center
             };
             RenderOptions.SetEdgeMode(rootIcon, EdgeMode.Aliased);

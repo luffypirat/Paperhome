@@ -5,7 +5,7 @@
         xmlns:paperhome="clr-namespace:Paperhome"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         Title="Paperwork" Height="700" Width="1150"
-        Icon="pack://application:,,,/Resources/logo.png"
+        Icon="Resources/logo.png"
         WindowStyle="None" ResizeMode="CanMinimize"
         WindowStartupLocation="CenterScreen"
         Background="#181818"
